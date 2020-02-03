@@ -1,3 +1,37 @@
+<?php
+header( "Content-type: application/javascript; charset: UTF-8" );
+
+//make get_option effective
+require_once( '../../../../../wp-config.php' );
+
+echo 'const live2d_Path = "' . LIVE2D_URL . '/live2d/model/poi/";';
+echo 'const message_Path = "' . LIVE2D_URL . '/live2d/";';
+echo 'const home_Path = "' . home_url() . '/";';
+
+if ( get_option( 'live2d_nohitokoto' ) == "checked" ) {
+	$noHitoKoto = 'true';
+//	echo "let nohitokoto = true;";
+} else {
+	$noHitoKoto = 'false';
+//	echo "let nohitokoto = false;";
+}
+if ( get_option( 'live2d_nospecialtip' ) == "checked" ) {
+	$noSpecialTip = 'true';
+//	echo "let nospecialtip = true;";
+} else {
+	$noSpecialTip = 'false';
+//	echo "let nospecialtip = false;";
+}
+if ( get_option( 'live2d_localkoto' ) == "checked" ) {
+	$localKoto = 'true';
+//	echo "let localkoto = true;";
+} else {
+	$localKoto = 'false';
+//	echo "let localkoto = false;";
+}
+
+?>
+
 function renderTip(template, context) {
     const tokenReg = /(\\)?\{([^\{\}\\]+)(\\)?\}/g;
     return template.replace(tokenReg, function (word, slash1, token, slash2) {
@@ -20,7 +54,8 @@ String.prototype.renderTip = function (context) {
     return renderTip(this, context);
 };
 
-if (nospecialtip === false) {
+
+if ('false' === <?php echo $noSpecialTip ?>) {
     const re = /x/;
     console.log(re);
     re.toString = function () {
@@ -107,7 +142,7 @@ initTips();
         }
     }
     showMessage(text, 12000);
-    document.addEventListener('visibilitychange', function() {
+    document.addEventListener('visibilitychange', function () {
         if (document.hidden) {
             showMessage("要出门了吗？<br> 我不觉得你能看到这句话（", 5000);
         } else {
@@ -116,18 +151,24 @@ initTips();
     });
 })();
 
-if(nohitokoto === false){
+if ('false' === <?php echo $noHitoKoto ?>) {
     let getActed = false;
     window.hitokotoTimer = 0;
     let hitokotoInterval = false;
 
-    $(document).mousemove(function(e){getActed = true;}).keydown(function(){getActed = true;});
-    setInterval(function() { if (!getActed) ifActed(); else elseActed(); }, 1000);
+    $(document).mousemove(function (e) {
+        getActed = true;
+    }).keydown(function () {
+        getActed = true;
+    });
+    setInterval(function () {
+        if (!getActed) ifActed(); else elseActed();
+    }, 1000);
 
     function ifActed() {
         if (!hitokotoInterval) {
             hitokotoInterval = true;
-            hitokotoTimer = window.setInterval(showHitokoto(localkoto), 20000);
+            hitokotoTimer = window.setInterval(showHitokoto(<?php echo $localKoto; ?>), 20000);
         }
     }
 
@@ -137,14 +178,13 @@ if(nohitokoto === false){
     }
 }
 
-function showHitokoto(lk){
-    if(lk) {
-        $.getJSON(message_Path+'localkoto.json.php',function(result){
+function showHitokoto(lk) {
+    if (lk) {
+        $.getJSON(message_Path + 'localkoto.json.php', function (result) {
             showMessage(result.localkoto, 5000);
         });
-    }
-    else {
-        $.getJSON('https://v1.hitokoto.cn/',function(result){
+    } else {
+        $.getJSON('https://v1.hitokoto.cn/', function (result) {
             showMessage(result.hitokoto, 5000);
         });
     }
@@ -152,7 +192,6 @@ function showHitokoto(lk){
 
 function showMessage(text, timeout) {
     if (Array.isArray(text)) text = text[Math.floor(Math.random() * text.length + 1) - 1];
-    //console.log('showMessage', text);
     jQuery('.message').stop();
     jQuery('.message').html(text).fadeTo(200, 1);
     if (timeout === null) timeout = 5000;
@@ -167,8 +206,8 @@ function hideMessage(timeout) {
     jQuery('.message').delay(timeout).fadeTo(200, 0);
 }
 
-function positionWrap(){
-    $('.h2wrap, .h3wrap').click(function() {
+function positionWrap() {
+    $('.h2wrap, .h3wrap').click(function () {
         if (location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') && location.hostname == this.hostname) {
             let $target = $(this.hash);
             $target = $target.length && $target || $('[name=' + this.hash.slice(1) + ']');
@@ -184,48 +223,45 @@ function positionWrap(){
     });
 }
 
-function initLive2d (){
-    if(nocatalog === false) $('.l2d-menu').prepend("<li class=\"l2d-action\" id=\"catalog-button\">目录</li>");
+function initLive2d() {
     $('body').append("<div class=\"show-button\">显示</div>");
-    if ($('.l2d-menu').fadeOut(0)){
-        $('#hide-button').on('click', () => {
+    if ($('.l2d-menu').fadeOut(0)) {
+        $('#hide-button').on('click', function () {
             $('#landlord').css('display', 'none');
             $('.show-button').fadeIn(300);
         });
-        $('#change-button').on('click', () => {
+        $('#switch-button').on('click', function () {
             jQuery("#live2d").animate({opacity: '0'}, 100);
             setTimeout("ChangePoi()", 200);
         });
-        if(nocatalog === false){
-            $('#catalog-button').on('click', () => {
-                let tits = 0;
-                let catalog;
-                if ($('article h2').length || $('article h3').length || $('article h4').length) {
-                    catalog = "<p class=\"l2d-cat\">这里有文章的目录哦~</p><br>";
-                    $('article h2, article h3, article h4').each(function(){
-                        $(this).attr("id","title-" + tits);
-                        if(0 == $(this).filter('h2').val()) catalog += "<p class=\"l2d-h2cat\">&raquo;<a class=\"h2wrap\" href=\"#title-"+tits+"\">"+$(this).text()+"</a></p><br>";
-                        if(0 == $(this).filter('h3').val()) catalog += "<p class=\"l2d-h3cat\">&raquo;<a class=\"h3wrap\" href=\"#title-"+tits+"\">"+$(this).text()+"</a></p><br>";
-                        if(0 == $(this).filter('h4').val()) catalog += "<p class=\"l2d-h3cat\">&raquo;<a class=\"h4wrap\" href=\"#title-"+tits+"\">"+$(this).text()+"</a></p><br>";
-                        tits++;
-                    });
-                    setTimeout("positionWrap()",200);
-                }
-                else {
-                    catalog = "然而这里并没有目录。";
-                }
-                showMessage(catalog, 10000);
-            });
-        }
+        $('#catalog-button').on('click', function () {
+            let tits = 0;
+            let catalog;
+            if ($('article h2').length || $('article h3').length || $('article h4').length) {
+                catalog = "<p class=\"l2d-cat\">这里有文章的目录哦~</p><br>";
+                $('article h2, article h3, article h4').each(function () {
+                    $(this).attr("id", "title-" + tits);
+                    if (0 == $(this).filter('h2').val()) catalog += "<p class=\"l2d-h2cat\">&raquo;<a class=\"h2wrap\" href=\"#title-" + tits + "\">" + $(this).text() + "</a></p><br>";
+                    if (0 == $(this).filter('h3').val()) catalog += "<p class=\"l2d-h3cat\">&raquo;<a class=\"h3wrap\" href=\"#title-" + tits + "\">" + $(this).text() + "</a></p><br>";
+                    if (0 == $(this).filter('h4').val()) catalog += "<p class=\"l2d-h3cat\">&raquo;<a class=\"h4wrap\" href=\"#title-" + tits + "\">" + $(this).text() + "</a></p><br>";
+                    tits++;
+                });
+                setTimeout("positionWrap()", 200);
+            } else {
+                catalog = "然而这里并没有目录。";
+            }
+            showMessage(catalog, 10000);
+        });
     }
-    $('#landlord').hover(() => {
+    $('#landlord').hover(function () {
         $('.l2d-menu').fadeIn(200)
-    }, () => {
+    }, function () {
         $('.l2d-menu').fadeOut(200)
     });
-    $('.show-button').on('click', () => {
+    $('.show-button').on('click', function () {
         $('#landlord').css('display', 'block');
         $('.show-button').fadeOut(200);
     })
 }
-initLive2d ();
+initLive2d();
+
