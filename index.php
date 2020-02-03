@@ -1,21 +1,21 @@
 <?php
 /*
-Plugin Name: PoiLive2D
-Plugin URI: https://daidr.me/archives/code-176.html
-Description: 添加一个Live2D人物在你的博客里
-Version: 1.0.0
-Author: 戴兜
-Author URI: https://daidr.me
+Plugin Name: PioLive2D Enhanced
+Plugin URI: https://github.com/wanghaiwei/PoiLive2d-Enhanced
+Description: 萌萌哒WordPress看板娘耶！
+Version: 2.0.0
+Author: 墨笙
+Author URI: https://rayfalling.com
 License: GPL2
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
 */
 
 defined('ABSPATH') or exit;
-define('LIVE2D_VERSION', '1.0.0');
+define('LIVE2D_VERSION', '2.0.0');
 define('LIVE2D_URL', plugins_url('', __FILE__));
 define('LIVE2D_PATH', dirname(__FILE__));
 
 add_action('admin_init', 'poilive2d_plugin_redirect');
-
 
 function poilive2d_plugin_redirect()
 {

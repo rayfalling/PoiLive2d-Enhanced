@@ -1,4 +1,4 @@
-# poilive2d-魔改版
+# PoiLive2D-魔改版
 给你的WordPress博客添加一只萌萌的看板娘！！  
 Add a live2d model to your WordPress blog!!
 ## 前言 / Introduction

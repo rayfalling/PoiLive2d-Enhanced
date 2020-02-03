@@ -35,7 +35,7 @@ if ($_POST['update_pluginoptions'] == 'true') {
     <p>请自行校验json有效性，不需要的话请填写{}</p>
     </div>
     <input type="submit" class="button-primary" value="保存设置" style="margin: 20px 0;" /> 
-	<br><br> PoiLive2D改 版本 <?php echo LIVE2D_VERSION; ?>
+	<br><br> PoiLive2D Enhanced 版本 <?php echo LIVE2D_VERSION; ?>
 	<br><br>原版插件作者 <a href="https://daidr.me" target="_blank">戴兜</a> &nbsp; <a href="https://daidr.me/archives/code-176.html" target="_blank" >点击获取最新版本 & 说明</a>
 </form>
 

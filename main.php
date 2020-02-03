@@ -40,7 +40,7 @@
             } else {
                 $maincolor = hex2rgb(get_option('live2d_maincolor'));
             }
-            echo '<script type="text/javascript">var live2d_Path = "' . LIVE2D_URL . '/live2d/model/poi/";var message_Path = "' . LIVE2D_URL . '/live2d/";var home_Path = "' . home_url() . '/";'.$nohitokoto.$nospecialtip.'</script>';
+            echo '<script type="text/javascript">const live2d_Path = "' . LIVE2D_URL . '/live2d/model/poi/";const message_Path = "' . LIVE2D_URL . '/live2d/";const home_Path = "' . home_url() . '/";' . $nohitokoto . $nospecialtip . $nocatalog . $localkoto.'</script>';
             echo "<style>.message{border-color:rgba($maincolor,.4);background-color:rgba($maincolor,.2);box-shadow:0 3px 15px 2px rgba($maincolor,.4);color:rgba($maincolor,.6);}.l2d-action,.show-button{border-color:rgba($maincolor,.4);background:rgba($maincolor,.2);box-shadow:0 3px 15px 2px rgba($maincolor,.4);color:rgba($maincolor,.6);}.l2d-action:hover,.show-button:hover{border-color:rgba($maincolor,.6);background:rgba($maincolor,.4);color:rgba($maincolor,.8);}</style>";
         }
     }

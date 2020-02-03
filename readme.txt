@@ -1,20 +1,20 @@
-﻿=== PoiLive2D ===
-Contributors: 戴兜
+﻿=== PoiLive2D Enhanced ===
+Contributors: 戴兜, 墨笙
+Version: 2.0.0
 Tags: html5, live2d, 人偶, 看板娘
 Requires at least: 3.5
-Tested up to: 5.3.1
+Tested up to: 5.3.2
 Stable tag: trunk
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-添加一个Live2D人物在你的博客里
+萌萌哒WordPress看板娘耶！
 
 == Description ==
 
 添加一个Live2D人物在你的博客里
 模型均来自手游 药水制作师
-详细介绍： https://daidr.me/archives/code-176.html
-
+原版详细介绍： https://daidr.me/archives/code-176.html
 
 == Installation ==
 
@@ -22,6 +22,10 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 2. 在后台插件菜单激活该插件
 
 == Changelog ==
+
+= 2.0.0 =
+* 添加了本地一言
+* 添加了显示目录的功能
 
 = 1.0.6 =
 * 不再使用第三方jQuery
