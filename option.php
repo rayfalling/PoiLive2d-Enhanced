@@ -1,8 +1,11 @@
 <?php
 defined( 'ABSPATH' ) or exit;
 if ( $_POST['update_plugin_options'] == 'true' ) {
-	live2d_options_update();
-	echo '<div id="message" class="updated"><h4>设置已成功保存</a></h4></div>';
+	if ( live2d_options_update() ) {
+		echo '<div id="message" class="updated"><h4>设置已成功保存</a></h4></div>';
+	} else {
+		echo '<div id="message" class="updated"><h4>设置更新失败</a></h4></div>';
+	}
 }
 ?>
     <style>
@@ -94,12 +97,12 @@ if ( $_POST['update_plugin_options'] == 'true' ) {
                 <span style="margin-left: 16px">一言显示</span>
             </p>
             <p>
-            <label class="switch">
-                <input type="checkbox" name="localkoto"
-                       id="localkoto" <?php echo get_option( 'live2d_localkoto' ); ?> >
-                <span class="slider round"></span>
-            </label>
-            <span style="margin-left: 16px">本地一言</span>
+                <label class="switch">
+                    <input type="checkbox" name="localkoto"
+                           id="localkoto" <?php echo get_option( 'live2d_localkoto' ); ?> >
+                    <span class="slider round"></span>
+                </label>
+                <span style="margin-left: 16px">本地一言</span>
             </p>
             <p>
                 <label class="switch">
@@ -130,6 +133,11 @@ if ( $_POST['update_plugin_options'] == 'true' ) {
 					echo "右下";
 				} ?>)</span>
             </p>
+            <p>
+                <input type="number" name="nav-offset"
+                       id="nav-offset" value="<?php echo get_option( 'live2d_nav-offset' ); ?>">
+                <span style="margin-left: 16px">目录滚动偏移高度(px)</span>
+            </p>
         </div>
         <h3>高级设置</h3>
         <div style="margin-left: 50px">
@@ -149,6 +157,16 @@ if ( $_POST['update_plugin_options'] == 'true' ) {
 
 <?php
 function live2d_options_update() {
+	//judge nav offset is numeric first
+	//this can block other settings update when get error input
+	if ( is_numeric( $_POST['nav-offset'] ) ) {
+		update_option( 'live2d_nav-offset', $_POST['nav-offset'] );
+	} else {
+		update_option( 'live2d_nav_offset', 0 );
+
+		return false;
+	}
+
 	update_option( 'live2d_maincolor', $_POST['main-color'] );
 
 	if ( $_POST['hitokoto'] == 'on' ) {
@@ -183,6 +201,8 @@ function live2d_options_update() {
 
 	update_option( 'live2d_customkoto', stripslashes( $_POST['custom-koto'] ) );
 	update_option( 'live2d_custommsg', stripslashes( $_POST['custom-msg'] ) );
+
+	return true;
 }
 
 ?>

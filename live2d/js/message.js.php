@@ -8,26 +8,20 @@ echo 'const live2d_Path = "' . LIVE2D_URL . '/live2d/model/poi/";';
 echo 'const message_Path = "' . LIVE2D_URL . '/live2d/";';
 echo 'const home_Path = "' . home_url() . '/";';
 
-if ( get_option( 'live2d_nohitokoto' ) == "checked" ) {
-	$noHitoKoto = 'true';
-//	echo "let nohitokoto = true;";
-} else {
+if ( get_option( 'live2d_hitokoto' ) == "checked" ) {
 	$noHitoKoto = 'false';
-//	echo "let nohitokoto = false;";
-}
-if ( get_option( 'live2d_nospecialtip' ) == "checked" ) {
-	$noSpecialTip = 'true';
-//	echo "let nospecialtip = true;";
 } else {
+	$noHitoKoto = 'true';
+}
+if ( get_option( 'live2d_special_tip' ) == "checked" ) {
 	$noSpecialTip = 'false';
-//	echo "let nospecialtip = false;";
+} else {
+	$noSpecialTip = 'true';
 }
 if ( get_option( 'live2d_localkoto' ) == "checked" ) {
 	$localKoto = 'true';
-//	echo "let localkoto = true;";
 } else {
 	$localKoto = 'false';
-//	echo "let localkoto = false;";
 }
 
 ?>
@@ -207,17 +201,33 @@ function hideMessage(timeout) {
 }
 
 function positionWrap() {
-    $('.h2wrap, .h3wrap').click(function () {
+    $('.h2wrap, .h3wrap .h4wrap').click(function () {
         if (location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') && location.hostname == this.hostname) {
             let $target = $(this.hash);
             $target = $target.length && $target || $('[name=' + this.hash.slice(1) + ']');
             if ($target.length) {
                 const targetOffset = $target.offset().top;
+				<?php if ( current_user_can( 'level_10' ) ): ?>
+				<?php if ( get_option( 'live2d_nav-offset' ) ) : ?>
                 $('html,body').animate({
-                        scrollTop: targetOffset
-                    },
-                    800);
-                return false;
+                    scrollTop: targetOffset - 32 - <?php echo get_option( 'live2d_nav-offset' ); ?>
+                }, 800);
+				<?php else: ?>
+                $('html,body').animate({
+                    scrollTop: targetOffset - 32 - $('nav').height() == undefined ? 0 : $('nav').height()
+                }, 800);
+				<?php endif; ?>
+				<?php else:?>
+				<?php if ( get_option( 'live2d_nav-offset' ) ) : ?>
+                $('html,body').animate({
+                    scrollTop: targetOffset - <?php echo get_option( 'live2d_nav-offset' ); ?>
+                }, 800);
+				<?php else: ?>
+                $('html,body').animate({
+                    scrollTop: targetOffset - $('nav').height() == undefined ? 0 : $('nav').height()
+                }, 800);
+				<?php endif; ?>
+				<?php endif; ?>
             }
         }
     });

@@ -23,6 +23,10 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 == Changelog ==
 
+= 2.0.2 =
+* 修复了一些bug
+* 添加了选择目录导航滚动偏移
+
 = 2.0.1 =
 * 优化了设置页
 * 添加了选择live2d位置的设置
