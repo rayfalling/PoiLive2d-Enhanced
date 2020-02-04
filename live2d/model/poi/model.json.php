@@ -5,7 +5,8 @@ $model = "{\"version\":\"1.0.0\",\"model\":\"model.moc\",\"layout\":{\"center_x\
 
 $model = str_replace('%textures%',plugins_url('', __FILE__)."/textures/".(string)mt_rand(1, 37).".png" ,$model);
 
-ob_get_clean();
-ob_clean();
+if ( ob_get_clean() ) {
+	ob_clean();
+}
 
 echo $model;

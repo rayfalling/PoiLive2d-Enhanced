@@ -1,6 +1,6 @@
 ﻿=== PoiLive2D Enhanced ===
 Contributors: 戴兜, 墨笙
-Version: 2.0.1
+Version: 2.0.2f
 Tags: html5, live2d, 人偶, 看板娘
 Requires at least: 3.5
 Tested up to: 5.3.2
@@ -22,6 +22,9 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 2. 在后台插件菜单激活该插件
 
 == Changelog ==
+
+= 2.0.2f =
+* 修复了一些bug
 
 = 2.0.2 =
 * 修复了一些bug

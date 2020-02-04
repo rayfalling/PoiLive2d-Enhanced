@@ -98,14 +98,6 @@ if ( $_POST['update_plugin_options'] == 'true' ) {
             </p>
             <p>
                 <label class="switch">
-                    <input type="checkbox" name="localkoto"
-                           id="localkoto" <?php echo get_option( 'live2d_localkoto' ); ?> >
-                    <span class="slider round"></span>
-                </label>
-                <span style="margin-left: 16px">本地一言</span>
-            </p>
-            <p>
-                <label class="switch">
                     <input type="checkbox" name="special-tip"
                            id="special-tip" <?php echo get_option( 'live2d_special_tip' ); ?> >
                     <span class="slider round"></span>
@@ -141,8 +133,14 @@ if ( $_POST['update_plugin_options'] == 'true' ) {
         </div>
         <h3>高级设置</h3>
         <div style="margin-left: 50px">
-            <input type="checkbox" name="localkoto" id="localkoto" <?php echo get_option( 'live2d_localkoto' ); ?> />
-            设置本地一言（需开启一言显示）<p>
+            <p>
+                <label class="switch">
+                    <input type="checkbox" name="localkoto"
+                           id="localkoto" <?php echo get_option( 'live2d_localkoto' ); ?> >
+                    <span class="slider round"></span>
+                </label>
+                <span style="margin-left: 16px">本地一言（需开启一言显示）</span>
+            </p>
             <p>自定义本地一言</p> <textarea name="custom-koto"
                                      id="custom-koto"><?php echo get_option( 'live2d_customkoto' ); ?></textarea>
             <p>自定义提示</p> <textarea name="custom-msg"
@@ -171,8 +169,14 @@ function live2d_options_update() {
 
 	if ( $_POST['hitokoto'] == 'on' ) {
 		update_option( 'live2d_hitokoto', 'checked' );
+		if ( $_POST['localkoto'] == 'on' ) {
+			update_option( 'live2d_localkoto', 'checked' );
+		} else {
+			update_option( 'live2d_localkoto', '' );
+		}
 	} else {
 		update_option( 'live2d_hitokoto', '' );
+		update_option( 'live2d_localkoto', '' );
 	}
 
 	if ( $_POST['special-tip'] == 'on' ) {
@@ -185,12 +189,6 @@ function live2d_options_update() {
 		update_option( 'live2d_catalog', 'checked' );
 	} else {
 		update_option( 'live2d_catalog', '' );
-	}
-
-	if ( $_POST['localkoto'] == 'on' ) {
-		update_option( 'live2d_localkoto', 'checked' );
-	} else {
-		update_option( 'live2d_localkoto', '' );
 	}
 
 	if ( $_POST['position'] == 'on' ) {

@@ -3,7 +3,7 @@
 Plugin Name: PoiLive2D Enhanced
 Plugin URI: https://github.com/wanghaiwei/PoiLive2d-Enhanced
 Description: 萌萌哒WordPress看板娘耶！
-Version: 2.0.2
+Version: 2.0.2f
 Author: 墨笙
 Author URI: https://rayfalling.com
 License: GPL2
@@ -11,7 +11,7 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 */
 
 defined( 'ABSPATH' ) or exit;
-define( 'LIVE2D_VERSION', '2.0.0' );
+define( 'LIVE2D_VERSION', '2.0.2f' );
 define( 'LIVE2D_URL', plugins_url( '', __FILE__ ) );
 define( 'LIVE2D_PATH', dirname( __FILE__ ) );
 
